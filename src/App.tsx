@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
+import { Demo } from './components/Demo/Demo'
 
 export const App = (): ReactNode => {
-  return <h1>Микробиология</h1>
+  return <Demo />
 }
