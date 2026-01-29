@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
-import { Demo } from './components/Demo/Demo'
+import AppLayout from './components/AppLayout/AppLayout'
 
 export const App = (): ReactNode => {
-  return <Demo />
+  return <AppLayout />
 }

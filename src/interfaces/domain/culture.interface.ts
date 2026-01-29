@@ -1,26 +1,5 @@
-import type { ETestResult } from "../../components/Demo/BiochemicalPanel";
-
-export enum EMedium {
-  BLOOD_AGAR = "Кровяной агар",
-  SABURO = "Агар сабуро",
-}
-
-export enum ESex {
-  MALE = "Мужской",
-  FEMALE = "Женский",
-}
-
-export enum ESusceptibility {
-  S = "S",
-  I = "I",
-  R = "R",
-  ATU = "ATU",
-  NA = "NA"
-}
-
-export enum EExpertSystem {
-  EUCST25 = "EUCST25",
-}
+import type { ETestResult } from "@/components/Demo/BiochemicalPanel";
+import type { EExpertSystem, EMedium, ESex, ESusceptibility } from "@/enums/microbio.enums";
 
 export interface IPatient {
   id: string;
@@ -29,6 +8,12 @@ export interface IPatient {
   middleName: string;
   bornDate: string;
   sex: ESex;
+}
+
+export interface IOrderService {
+  id: string;
+  name: string;
+  biomaterial: string;
 }
 
 export interface IBiochemicalTest {
@@ -42,16 +27,37 @@ export interface IDish {
   number: string;
   medium: EMedium;
   growth: boolean;
+  colonies: IColony[];
 }
 
 export interface IColony {
   id: string;
+  dishId: string;
   number: string;
-  microorganism: string;
   cfu: string;
+  biochemicalTests: IBiochemicalTest[];
+  identification: IIdentification;
+  massSpectrometry: IMaldiTOFResult[];
+  antibiogram: {
+    results: IAntibiogramResult[];
+    evaluation: IExpertRule[];
+  };
 }
 
 export interface IMicroorganism {
+  code: string;
+  name: string;
+}
+
+export interface IIdentification {
+  id: string;
+  colonyId: string;
+  microorganism: IMicroorganism | null;
+  cfu: string;
+  isIdentified: boolean;
+}
+
+export interface IAntibiotic {
   code: string;
   name: string;
 }
@@ -63,20 +69,29 @@ export interface IMaldiTOFResult {
   probability: number;
 }
 
+export interface IExpertRule {
+  id: string;
+  ruleText: string;
+}
+
 export interface IAntibiogramResult {
   id: string;
-  antibioticName: string;
+  antibiotic: IAntibiotic;
   value: number;
   sir: ESusceptibility;
   expertSystem: EExpertSystem;
 }
 
-export interface IExpertRule {
-  id: string;
-  rule: string;
+export interface IOrder {
+  patient: IPatient;
+  services: IOrderService[];
 }
 
 export interface ICulture {
-  patient: IPatient;
   dishes: IDish[];
+}
+
+export interface IMicrobio {
+  order: IOrder;
+  culture: ICulture;
 }

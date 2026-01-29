@@ -12,7 +12,17 @@ import {
   UpSquareOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Checkbox, Dropdown, Flex, InputNumber, Popconfirm, Table, Tooltip, type MenuProps } from "antd";
+import {
+  Button,
+  Checkbox,
+  Dropdown,
+  Flex,
+  InputNumber,
+  Popconfirm,
+  Table,
+  Tooltip,
+  type MenuProps,
+} from "antd";
 import Column from "antd/es/table/Column";
 import { useState, type ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -225,23 +235,14 @@ export const Demo = (): ReactNode => {
     );
   };
 
-  const renderEsCollapseBtn = (): ReactNode => {
-    return esCollapsed ? (
-      <DownSquareOutlined className={styles.collapseBtn} onClick={() => setEsCollapsed(!esCollapsed)} />
-    ) : (
-      <UpSquareOutlined className={styles.collapseBtn} onClick={() => setEsCollapsed(!esCollapsed)} />
-    );
+  const renderEsBtn = (): ReactNode => {
+    return <Button className={styles.collapseBtn} onClick={() => setEsCollapsed(!esCollapsed)}>Применить экспертные правила</Button>
   };
 
   const renderExpertRules = (): ReactNode => {
     return (
-      <Table
-        dataSource={expertRules}
-        rowKey={"id"}
-        size="small"
-        pagination={false}
-      >
-        <Column title="Выводить в бланк" key="print" render={() => <Checkbox checked/>}/>
+      <Table dataSource={expertRules} rowKey={"id"} size="small" pagination={false}>
+        <Column title="Выводить в бланк" key="print" render={() => <Checkbox checked />} />
         <Column title="Заключение по EUCAST24" key="rule" dataIndex="rule" />
       </Table>
     );
@@ -431,7 +432,7 @@ export const Demo = (): ReactNode => {
   return (
     <Flex className={styles.container}>
       <Flex className={styles.buttonList}>{renderTopButtons()}</Flex>
-      <Flex>{renderPatientInfo()}</Flex>
+      <Flex className={styles.orderBox}>{renderPatientInfo()}</Flex>
       <Flex className={styles.cultureBox}>
         <Flex className={[styles.sider, dishesCollapsed ? styles.collapsed : styles.expanded].join(" ")}>
           <Flex className={styles.siderHeader}>
@@ -440,8 +441,7 @@ export const Demo = (): ReactNode => {
           </Flex>
           <Flex className={styles.dishList}>{renderDishes()}</Flex>
         </Flex>
-        <Flex className={styles.results}>
-          <Flex
+                  <Flex
             className={[
               styles.sider,
               styles.colonySider,
@@ -454,6 +454,8 @@ export const Demo = (): ReactNode => {
             </Flex>
             <Flex className={styles.colonyList}>{renderColonies()}</Flex>
           </Flex>
+        <Flex className={styles.results}>
+
           <Flex className={styles.resultBox}>
             <Flex vertical gap={10}>
               <Flex className={styles.resultHeader}>
@@ -481,16 +483,22 @@ export const Demo = (): ReactNode => {
               <Flex className={[styles.resultList, abgCollapsed ? styles.hidden : ""].join(" ")}>
                 {renderAntibiogramTable()}
               </Flex>
-            </Flex>
-            <Flex vertical gap={10}>
-              <Flex className={styles.resultHeader}>
-                <h4>Экспертные правила</h4>
-                {renderEsCollapseBtn()}
+              <Flex>
+                {renderEsBtn()}
               </Flex>
               <Flex className={[styles.resultList, esCollapsed ? styles.hidden : ""].join(" ")}>
                 {renderExpertRules()}
               </Flex>
             </Flex>
+            {/* <Flex vertical gap={10}>
+              <Flex className={styles.resultHeader}>
+                <h4>Экспертные правила</h4>
+                
+              </Flex>
+              <Flex className={[styles.resultList, esCollapsed ? styles.hidden : ""].join(" ")}>
+                {renderExpertRules()}
+              </Flex>
+            </Flex> */}
           </Flex>
         </Flex>
       </Flex>

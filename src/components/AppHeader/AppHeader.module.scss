@@ -1,0 +1,23 @@
+@use "../../assets/styles/vars";
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  .headerButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  .headerOrderInfo {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    background-color: vars.$main-white;
+    border: 1px solid vars.$light-gray;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+}

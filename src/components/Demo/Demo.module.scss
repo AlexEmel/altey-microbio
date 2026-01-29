@@ -22,14 +22,13 @@
   flex-grow: 1;
   gap: 0.5rem;
   width: 100%;
-
+  background-color: color.adjust(vars.$bg-blue, $lightness: 5%);
   .dishList {
     display: flex;
     overflow-y: auto;
     flex-direction: column;
     flex-wrap: wrap;
     gap: 0.5rem;
-
     .dish {
       position: relative;
       background-color: vars.$main-white;
@@ -63,48 +62,7 @@
     flex-grow: 1;
     background-color: vars.$main-white;
     border-radius: 0.5rem;
-    .colonySider {
-      flex-shrink: 0;
-      padding: 0 0.5rem;
-      background-color: color.adjust(vars.$altey-blue, $lightness: 60%);
-      .colonyList {
-        flex-direction: column;
-        gap: 0.5rem;
-        .colony {
-          position: relative;
-          background-color: vars.$main-white;
-          // height: 50px;
-          border-radius: 0.25rem;
-          padding: 0.5rem;
-          border: 1px solid vars.$light-gray;
-          img {
-            height: 30px;
-          }
-          .colonyInfo {
-            display: flex;
-            flex-direction: column;
-            font-size: 0.8rem;
-            gap: 0.2rem;
-            .bacteriaInfo {
-              margin-left: 0.25rem;
-              gap: 0.25rem;
-              .bacteriaName {
-                color: vars.$altey-red;
-              }
-            }
-          }
-          .closeBtn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 1rem;
-          }
-          &:hover {
-            background-color: vars.$bg-beige;
-          }
-        }
-      }
-    }
+    border: 1px solid vars.$main-text;
     .resultBox {
       overflow-y: auto;
       display: flex;
@@ -173,7 +131,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-
+  padding: 0.5rem;
+  border: 1px solid vars.$main-text;
+  background-color: vars.$main-white;
   .siderHeader {
     display: flex;
     justify-content: space-between;
@@ -183,7 +143,7 @@
 .addDish {
   font-size: 1.5rem;
   color: vars.$main-text;
-  >span {
+  > span {
     background-color: vars.$main-white;
   }
   :hover {
@@ -211,10 +171,13 @@
 }
 
 .orderInfo {
+  background-color: vars.$main-white;
+  padding: 0.5rem;
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid vars.$main-text;
 }
 
 .redText {
@@ -317,4 +280,48 @@
 .panelTestNa {
   background-color: vars.$main-white;
   color: vars.$main-text !important;
+}
+
+.colonySider {
+  flex-shrink: 0;
+  padding: 0 0.5rem;
+  // background-color: color.adjust(vars.$altey-blue, $lightness: 60%);
+  background-color: vars.$main-white;
+  .colonyList {
+    flex-direction: column;
+    gap: 0.5rem;
+    .colony {
+      position: relative;
+      background-color: vars.$main-white;
+      // height: 50px;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      border: 1px solid vars.$light-gray;
+      img {
+        height: 30px;
+      }
+      .colonyInfo {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8rem;
+        gap: 0.2rem;
+        .bacteriaInfo {
+          margin-left: 0.25rem;
+          gap: 0.25rem;
+          .bacteriaName {
+            color: vars.$altey-red;
+          }
+        }
+      }
+      .closeBtn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 1rem;
+      }
+      &:hover {
+        background-color: vars.$bg-beige;
+      }
+    }
+  }
 }

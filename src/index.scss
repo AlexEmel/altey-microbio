@@ -23,8 +23,9 @@ html, body {
   width: 100vw;
   height: 100vh;
   height: 100svh;
-  background-color: color.adjust(vars.$bg-blue, $lightness: 7%);
-  background-color: vars.$bg-blue;
+  background-color: color.adjust(vars.$bg-blue, $lightness: 5%);
+  // background-color: vars.$bg-blue;
+  // background-color: vars.$main-white;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

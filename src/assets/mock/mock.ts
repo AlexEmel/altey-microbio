@@ -1,20 +1,18 @@
+import { EExpertSystem, EMedium, ESex, ESusceptibility } from "@/enums/microbio.enums";
 import { ETestResult } from "../../components/Demo/BiochemicalPanel";
 import {
-  EExpertSystem,
-  EMedium,
-  ESex,
-  ESusceptibility,
   type IAntibiogramResult,
   type IBiochemicalTest,
-  type IColony,
   type ICulture,
   type IDish,
   type IExpertRule,
   type IMaldiTOFResult,
-  type IPatient,
+  type IMicrobio,
+  type IOrder,
+  type IPatient
 } from "../../interfaces/domain/culture.interface";
 
-export const mockPatient: IPatient = {
+const mockPatient: IPatient = {
   id: "123",
   firstName: "Алексей",
   lastName: "Емельянов",
@@ -23,33 +21,18 @@ export const mockPatient: IPatient = {
   sex: ESex.MALE,
 };
 
-export const mockDishes: IDish[] = [
-  {
-    id: "123",
-    number: "1-1",
-    medium: EMedium.BLOOD_AGAR,
-    growth: true,
-  },
-  {
-    id: "234",
-    number: "1-2",
-    medium: EMedium.SABURO,
-    growth: true,
-  },
-  {
-    id: "345",
-    number: "1-3",
-    medium: EMedium.SABURO,
-    growth: false,
-  },
-];
-
-export const mockCulture: ICulture = {
+const mockOrder: IOrder = {
   patient: mockPatient,
-  dishes: mockDishes,
+  services: [
+    {
+      id: "123",
+      name: "Исследование: посев мочи на аэробные и анаэробные микроорганизмы с определением чувствительности",
+      biomaterial: "Моча",
+    },
+  ],
 };
 
-export const mockChemicalPanel: IBiochemicalTest[] = [
+const mockChemicalPanel: IBiochemicalTest[] = [
   {
     id: "123",
     code: "URE",
@@ -77,7 +60,7 @@ export const mockChemicalPanel: IBiochemicalTest[] = [
   },
 ];
 
-export const mockMaldi: IMaldiTOFResult[] = [
+const mockMaldi: IMaldiTOFResult[] = [
   {
     id: "maldi-1",
     category: "()()",
@@ -170,261 +153,290 @@ export const mockMaldi: IMaldiTOFResult[] = [
   },
 ];
 
-export const mockColonies: IColony[] = [
-  {
-    id: "123",
-    number: "1-1",
-    microorganism: "Staphylococcus aureus",
-    cfu: "1,000*10^5 КОЕ/мл",
-  },
-  {
-    id: "234",
-    number: "1-2",
-    microorganism: "Escherichia coli",
-    cfu: "1,000*10^7 КОЕ/мл",
-  },
-  {
-    id: "345",
-    number: "1-3",
-    microorganism: "Leuconostoc mesenteroides subspecies mesenteroides",
-    cfu: "не установлен",
-  },
-];
-
-// export const mockAntibiogramResults: IAntibiogramResult[] = [
-//   {
-//     id: "abg-1",
-//     antibioticName: "Amoxicillin/Clavulanic acid",
-//     value: 18,
-//     sir: ESusceptibility.S,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-2",
-//     antibioticName: "Ceftriaxone",
-//     value: 26,
-//     sir: ESusceptibility.S,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-3",
-//     antibioticName: "Ciprofloxacin",
-//     value: 12,
-//     sir: ESusceptibility.R,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-4",
-//     antibioticName: "Meropenem",
-//     value: 30,
-//     sir: ESusceptibility.S,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-5",
-//     antibioticName: "Piperacillin/Tazobactam",
-//     value: 16,
-//     sir: ESusceptibility.I,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-6",
-//     antibioticName: "Gentamicin",
-//     value: 14,
-//     sir: ESusceptibility.I,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-7",
-//     antibioticName: "Vancomycin",
-//     value: 19,
-//     sir: ESusceptibility.S,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-8",
-//     antibioticName: "Linezolid",
-//     value: 24,
-//     sir: ESusceptibility.S,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-9",
-//     antibioticName: "Colistin",
-//     value: 9,
-//     sir: ESusceptibility.ATU,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-//   {
-//     id: "abg-10",
-//     antibioticName: "Trimethoprim/Sulfamethoxazole",
-//     value: 11,
-//     sir: ESusceptibility.R,
-//     expertSystem: EExpertSystem.EUCST25,
-//   },
-// ];
-
-export const mockAntibiogramResults: IAntibiogramResult[] = [
+const mockAntibiogramResults: IAntibiogramResult[] = [
   {
     id: "abg-1",
-    antibioticName: "Amoxicillin/Clavulanic acid",
+    antibiotic: {
+      name: "Amoxicillin/Clavulanic acid",
+      code: "AMX",
+    },
     value: 18,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-2",
-    antibioticName: "Ceftriaxone",
+    antibiotic: {
+      name: "Ceftriaxone",
+      code: "CFX",
+    },
     value: 26,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-3",
-    antibioticName: "Ciprofloxacin",
+    antibiotic: {
+      name: "Ciprofloxacin",
+      code: "CIP",
+    },
     value: 12,
     sir: ESusceptibility.R,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-4",
-    antibioticName: "Meropenem",
+    antibiotic: {
+      name: "Meropenem",
+      code: "MEM",
+    },
     value: 30,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-5",
-    antibioticName: "Piperacillin/Tazobactam",
+    antibiotic: {
+      name: "Piperacillin/Tazobactam",
+      code: "TZP",
+    },
     value: 16,
     sir: ESusceptibility.I,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-6",
-    antibioticName: "Gentamicin",
+    antibiotic: {
+      name: "Gentamicin",
+      code: "GEN",
+    },
     value: 14,
     sir: ESusceptibility.I,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-7",
-    antibioticName: "Vancomycin",
+    antibiotic: {
+      name: "Vancomycin",
+      code: "VAN",
+    },
     value: 19,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-8",
-    antibioticName: "Linezolid",
+    antibiotic: {
+      name: "Linezolid",
+      code: "LZD",
+    },
     value: 24,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-9",
-    antibioticName: "Colistin",
+    antibiotic: {
+      name: "Colistin",
+      code: "CST",
+    },
     value: 9,
     sir: ESusceptibility.ATU,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-10",
-    antibioticName: "Trimethoprim/Sulfamethoxazole",
+    antibiotic: {
+      name: "Trimethoprim/Sulfamethoxazole",
+      code: "SXT",
+    },
     value: 11,
     sir: ESusceptibility.R,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-11",
-    antibioticName: "Imipenem",
+    antibiotic: {
+      name: "Imipenem",
+      code: "IPM",
+    },
     value: 28,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-12",
-    antibioticName: "Ceftazidime",
+    antibiotic: {
+      name: "Ceftazidime",
+      code: "CAZ",
+    },
     value: 17,
     sir: ESusceptibility.I,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-13",
-    antibioticName: "Cefepime",
+    antibiotic: {
+      name: "Cefepime",
+      code: "FEP",
+    },
     value: 21,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-14",
-    antibioticName: "Levofloxacin",
+    antibiotic: {
+      name: "Levofloxacin",
+      code: "LVX",
+    },
     value: 13,
     sir: ESusceptibility.R,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-15",
-    antibioticName: "Amikacin",
+    antibiotic: {
+      name: "Amikacin",
+      code: "AMK",
+    },
     value: 22,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-16",
-    antibioticName: "Tigecycline",
+    antibiotic: {
+      name: "Tigecycline",
+      code: "TGC",
+    },
     value: 18,
     sir: ESusceptibility.I,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-17",
-    antibioticName: "Azithromycin",
+    antibiotic: {
+      name: "Azithromycin",
+      code: "AZM",
+    },
     value: 10,
     sir: ESusceptibility.R,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-18",
-    antibioticName: "Doxycycline",
+    antibiotic: {
+      name: "Doxycycline",
+      code: "DOX",
+    },
     value: 20,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-19",
-    antibioticName: "Cefotaxime",
+    antibiotic: {
+      name: "Cefotaxime",
+      code: "CTX",
+    },
     value: 23,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-20",
-    antibioticName: "Ertapenem",
+    antibiotic: {
+      name: "Ertapenem",
+      code: "ETP",
+    },
     value: 27,
     sir: ESusceptibility.S,
     expertSystem: EExpertSystem.EUCST25,
   },
   {
     id: "abg-21",
-    antibioticName: "Nitrofurantoin",
+    antibiotic: {
+      name: "Nitrofurantoin",
+      code: "NIT",
+    },
     value: 15,
     sir: ESusceptibility.NA,
     expertSystem: EExpertSystem.EUCST25,
   },
 ];
 
-export const mockExpertRules: IExpertRule[] = [
+const mockExpertRules: IExpertRule[] = [
   {
     id: "123",
-    rule: "[Гентамицин] ВНИМАНИЕ! Изолят обладает резистентностью Высокого уровня к гентамицину и другим аминогликозидам, за исключением стрептомицина. Синергизм с пенициллинами и/или гликопептидами отсутcтвует.",
+    ruleText:
+      "[Гентамицин] ВНИМАНИЕ! Изолят обладает резистентностью Высокого уровня к гентамицину и другим аминогликозидам, за исключением стрептомицина. Синергизм с пенициллинами и/или гликопептидами отсутcтвует.",
   },
   {
     id: "234",
-    rule: "Выделенный микроорганизм, в дополнение к природной резистентности грамположительных бактерий, природно резистентен к фузидовой кислоте, цефалоспоринам, аминогликозидам (низкий уровень резистентности), макролидам и сульфаниламидам.",
+    ruleText:
+      "Выделенный микроорганизм, в дополнение к природной резистентности грамположительных бактерий, природно резистентен к фузидовой кислоте, цефалоспоринам, аминогликозидам (низкий уровень резистентности), макролидам и сульфаниламидам.",
   },
   {
     id: "345",
-    rule: "Выделенный изолят Enterococcus, чувствительный к ванкомицину, также чувствителен к далбаванцину, оритаванцину и телаванцину.",
+    ruleText:
+      "Выделенный изолят Enterococcus, чувствительный к ванкомицину, также чувствителен к далбаванцину, оритаванцину и телаванцину.",
   },
 ];
+
+
+const mockDishes: IDish[] = [
+  {
+    id: "123",
+    number: "1-1",
+    medium: EMedium.BLOOD_AGAR,
+    growth: true,
+    colonies: [
+      {
+        id: "123",
+        dishId: "123",
+        number: "1-1",
+        cfu: "",
+        biochemicalTests: mockChemicalPanel,
+        massSpectrometry: mockMaldi,
+        identification: {
+          id: "123",
+          colonyId: "123",
+          microorganism: {
+            code: "STA",
+            name: "Staphylococcus aureus",
+          },
+          cfu: "10*7",
+          isIdentified: true,
+        },
+        antibiogram: {
+          results: mockAntibiogramResults,
+          evaluation: mockExpertRules,
+        },
+      },
+    ],
+  },
+  {
+    id: "234",
+    number: "1-2",
+    medium: EMedium.SABURO,
+    growth: true,
+    colonies: [],
+  },
+  {
+    id: "345",
+    number: "1-3",
+    medium: EMedium.SABURO,
+    growth: false,
+    colonies: [],
+  },
+];
+
+export const mockCulture: ICulture = {
+  dishes: mockDishes,
+}
+
+export const mockMicrobio: IMicrobio = {
+  order: mockOrder,
+  culture: mockCulture,
+}
