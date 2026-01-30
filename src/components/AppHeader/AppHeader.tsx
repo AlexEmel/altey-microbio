@@ -12,7 +12,7 @@ import { type ReactNode } from "react";
 import styles from "./AppHeader.module.scss";
 
 export default function AppHeader(): ReactNode {
-  const patient = useAppSelector(store => store.microbio.data.order.patient)
+  const { patient, services } = useAppSelector(store => store.microbio.data.order)
 
   const renderTopButtons = (): ReactNode => {
     return (
@@ -31,10 +31,8 @@ export default function AppHeader(): ReactNode {
     return (
       <>
         <h4>{`${patient.lastName} ${patient.firstName} ${patient.middleName}, ${new Date(patient.bornDate).toLocaleDateString()}`}</h4>
-        <span>
-          Биоматериал: Моча Исследование: посев мочи на аэробные и анаэробные микроорганизмы с определением
-          чувствительности
-        </span>
+        <span>{`Биоматериал: ${services[0].biomaterial}`}</span>
+        <span>{`Исследование: ${services[0].name}`}</span>
       </>
     );
   };

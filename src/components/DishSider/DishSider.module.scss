@@ -1,0 +1,39 @@
+@use "../../assets/styles/vars";
+
+.sider {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+  border: 1px solid vars.$main-text;
+  background-color: vars.$main-white;
+  .siderHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+  .dishList {
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    .addDish {
+      font-size: 1.5rem;
+      color: vars.$main-text;
+      > span {
+        background-color: vars.$main-white;
+      }
+      :hover {
+        color: vars.$accent-orange;
+      }
+    }
+  }
+}
+
+.siderExpanded {
+  width: 200px;
+}
+
+.siderCollapsed {
+  width: 90px;
+}

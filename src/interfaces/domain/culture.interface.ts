@@ -34,14 +34,13 @@ export interface IColony {
   id: string;
   dishId: string;
   number: string;
-  cfu: string;
   biochemicalTests: IBiochemicalTest[];
-  identification: IIdentification;
+  identification: IIdentification | null;
   massSpectrometry: IMaldiTOFResult[];
   antibiogram: {
     results: IAntibiogramResult[];
     evaluation: IExpertRule[];
-  };
+  } | null;
 }
 
 export interface IMicroorganism {

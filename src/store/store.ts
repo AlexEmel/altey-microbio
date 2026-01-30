@@ -16,7 +16,7 @@ import {
 const persistConfig = {
   key: "altey-microbio-v1",
   storage,
-  whitelist: ["microbio"],
+  whitelist: [],
 };
 
 const rootReducer = combineReducers({

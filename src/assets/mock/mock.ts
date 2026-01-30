@@ -26,7 +26,7 @@ const mockOrder: IOrder = {
   services: [
     {
       id: "123",
-      name: "Исследование: посев мочи на аэробные и анаэробные микроорганизмы с определением чувствительности",
+      name: "Посев мочи на аэробные и анаэробные микроорганизмы с определением чувствительности",
       biomaterial: "Моча",
     },
   ],
@@ -396,7 +396,6 @@ const mockDishes: IDish[] = [
         id: "123",
         dishId: "123",
         number: "1-1",
-        cfu: "",
         biochemicalTests: mockChemicalPanel,
         massSpectrometry: mockMaldi,
         identification: {

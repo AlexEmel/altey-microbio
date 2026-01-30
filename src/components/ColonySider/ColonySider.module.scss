@@ -1,0 +1,27 @@
+@use "../../assets/styles/vars";
+
+.sider {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid vars.$main-text;
+  background-color: vars.$main-white;
+  flex-shrink: 0;
+  padding: 0 0.5rem;
+  .siderHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+  .colonyList {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+.expanded {
+  width: 320px;
+}
+
+.collapsed {
+  width: 120px;
+}
